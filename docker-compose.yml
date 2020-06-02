@@ -1,0 +1,20 @@
+version: '3.0'
+
+networks:
+  exam:
+
+services:
+  rabbitmq:
+    networks:
+     - exam
+    image: masstransit/rabbitmq:latest
+    ports:
+     - "5672:5672"
+     - "15672:15672"
+     - "15692:15692"
+  redis:
+    image: redis
+    networks:
+     - exam
+    ports:
+      - "6379:6379"
