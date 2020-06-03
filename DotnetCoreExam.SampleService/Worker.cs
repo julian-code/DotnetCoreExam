@@ -20,6 +20,7 @@ namespace DotnetCoreExam.SampleService
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Hello from worker!");
             await _bus.StartAsync(cancellationToken).ConfigureAwait(false);
         }
 

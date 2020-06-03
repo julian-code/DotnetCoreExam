@@ -10,6 +10,7 @@ using MassTransit.Definition;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace DotnetCoreExam.SampleService
 {
@@ -22,12 +23,14 @@ namespace DotnetCoreExam.SampleService
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(logging => logging.SetMinimumLevel(LogLevel.Debug))
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.TryAddSingleton(KebabCaseEndpointNameFormatter.Instance);
                     services.AddMassTransit(cfg =>
                     {
-                        cfg.AddSagaStateMachine<OrderStateMachine, OrderState>().RedisRepository();
+                        cfg.AddSagaStateMachine<OrderStateMachine, OrderState>(typeof(OrderStateMachineDefinition))
+                            .RedisRepository();
                         cfg.AddConsumersFromNamespaceContaining<SubmitOrderConsumer>();
                         cfg.AddBus(ConfigureBus);
                     });

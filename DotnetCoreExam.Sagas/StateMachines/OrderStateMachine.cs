@@ -3,8 +3,6 @@ using DotnetCoreExam.Contracts;
 using MassTransit;
 using MassTransit.RedisIntegration;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DotnetCoreExam.Sagas.StateMachines
 {
